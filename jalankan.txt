@@ -1,0 +1,1 @@
+sudo uvicorn main:app --host 0.0.0.0 --port 443 --ssl-certfile ./ongoing.ccgnimex.my.id/fullchain.pem --ssl-keyfile ./ongoing.ccgnimex.my.id/privkey.pem
