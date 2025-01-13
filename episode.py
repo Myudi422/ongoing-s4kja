@@ -153,7 +153,7 @@ async def scrape_anime(
                             'anime_id': str(anime_id),
                             'episode_number': str(ep_number),
                             'title': ep_title,
-                             video_url = proxy_video_url(video_url)  # Tambahkan proxy
+                            'video_url' = proxy_video_url(video_url)  # Tambahkan proxy
                             'video_time': None,
                             'link_gambar': None,
                         })
