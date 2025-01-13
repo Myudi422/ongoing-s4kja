@@ -30,6 +30,12 @@ async def get_resolusi(
 
     return resolutions
 
+def convert_to_proxy_url(video_url):
+    """Konversi URL jika berasal dari storages.sokuja.id"""
+    if "storages.sokuja.id" in video_url:
+        return f"https://ongoing.ccgnimex.my.id/proxy/proxy?url={video_url}"
+    return video_url
+
 
 def generate_resolution_urls(base_video_url, ep_number, is_end):
     """Generate possible resolution URLs for an episode with multiple resolutions."""
@@ -134,7 +140,7 @@ def get_resolusi_from_sokuja(anime_id, episode_number, request):
 
                         resolutions.append({
                             'resolusi': resolusi,
-                            'video_url': url
+                            'video_url': convert_to_proxy_url(url)  # Konversi jika perlu
                         })
 
                 break
@@ -176,7 +182,7 @@ def get_resolusi_from_default_database(anime_id, episode_number, request):
 
             resolutions.append({
                 'resolusi': resolusi,
-                'video_url': row['video_url']
+                'video_url': convert_to_proxy_url(row['video_url'])  # Konversi jika perlu
             })
 
         return resolutions
