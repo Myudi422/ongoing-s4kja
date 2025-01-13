@@ -16,6 +16,11 @@ def get_db_connection(request: Request):
         database=db_config['database'],
         cursorclass=pymysql.cursors.DictCursor,
     )
+def proxy_video_url(video_url):
+    if "storages.sokuja.id" in video_url:
+        return f"https://ongoing.ccgnimex.my.id/proxy/proxy?url={video_url}"
+    return video_url
+
 
 def fetch_sokuja_data(anime_id, request: Request):
     query = "SELECT slug, base_video_url FROM sokuja WHERE anime_id = %s"
@@ -148,7 +153,7 @@ async def scrape_anime(
                             'anime_id': str(anime_id),
                             'episode_number': str(ep_number),
                             'title': ep_title,
-                            'video_url': video_url,
+                             video_url = proxy_video_url(video_url)  # Tambahkan proxy
                             'video_time': None,
                             'link_gambar': None,
                         })
@@ -163,7 +168,7 @@ async def scrape_anime(
                     'anime_id': str(row['anime_id']),
                     'episode_number': str(row['episode_number']),
                     'title': str(row['title']),
-                    'video_url': str(row['video_url']),
+                    'video_url': proxy_video_url(str(row['video_url'])),  # Tambahkan proxy di sini
                     'subtitle_links': str(row['subtitle_links']) if row['subtitle_links'] else None,
                     'subtitle_url': str(row['subtitle_url']) if row['subtitle_url'] else None,
                     'resolusi': str(row['resolusi']),
