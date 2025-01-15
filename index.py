@@ -41,10 +41,16 @@ async def fetch_ongoing_anime(
 ):
     url = f"{BASE_URL}?status={status}&type={type_}&order={order}"
 
+    # Proxy configuration
+    proxies = {
+        'http': 'socks5h://127.0.0.1:444',
+        'https': 'socks5h://127.0.0.1:444',
+    }
+
     try:
         response = requests.get(url, headers={
             "User-Agent": "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/50.0.2661.102 Safari/537.36"
-        })
+        }, proxies=proxies)
         response.raise_for_status()
     except requests.RequestException as e:
         raise HTTPException(status_code=500, detail=f"Failed to fetch data from source: {str(e)}")

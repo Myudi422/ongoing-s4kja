@@ -4,6 +4,14 @@ import pymysql
 from bs4 import BeautifulSoup
 import requests
 
+
+
+proxies = {
+    'http': 'socks5h://127.0.0.1:444',
+    'https': 'socks5h://127.0.0.1:444',
+}
+
+
 # Define Router
 episode_router = APIRouter()
 
@@ -106,7 +114,7 @@ def generate_video_url(base_video_url, ep_number, is_end):
 def validate_video_url(video_url):
     """Check if the video URL is accessible."""
     try:
-        response = requests.head(video_url, allow_redirects=True, timeout=5)
+        response = requests.head(video_url, allow_redirects=True, timeout=5, proxies=proxies)
         return response.status_code == 200
     except requests.RequestException:
         return False
@@ -138,7 +146,7 @@ async def scrape_anime(
             url = f"https://x1.sokuja.uk/anime/{slug}/"
 
             try:
-                html = requests.get(url).text
+                html = requests.get(url, proxies=proxies).text
                 soup = BeautifulSoup(html, 'html.parser')
                 episode_elements = soup.select('div.eplister ul li')
 

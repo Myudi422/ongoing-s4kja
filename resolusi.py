@@ -10,6 +10,13 @@ resolusi_router = APIRouter()
 # Cache dictionary for URL validation
 url_cache = {}
 
+proxies = {
+    'http': 'socks5h://127.0.0.1:444',
+    'https': 'socks5h://127.0.0.1:444',
+}
+
+
+
 # Endpoint to get resolution
 @resolusi_router.get("/")
 async def get_resolusi(
@@ -75,7 +82,7 @@ def validate_video_url(video_url):
 
     # If not in cache or cache expired, validate URL
     try:
-        response = requests.head(video_url, allow_redirects=True, timeout=5)
+        response = requests.head(video_url, allow_redirects=True, timeout=5, proxies=proxies)
         is_valid = response.status_code == 200
     except requests.RequestException:
         is_valid = False
@@ -113,7 +120,7 @@ def get_resolusi_from_sokuja(anime_id, episode_number, request):
         url = f'https://x1.sokuja.uk/anime/{anime_slug}/'
 
         # Fetch the anime page
-        html = requests.get(url).text
+        html = requests.get(url, proxies=proxies).text
         soup = BeautifulSoup(html, 'html.parser')
         episodes = soup.select('div.eplister ul li')
 

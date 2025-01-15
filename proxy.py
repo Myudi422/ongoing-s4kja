@@ -2,6 +2,12 @@ from fastapi import APIRouter, HTTPException
 from fastapi.responses import StreamingResponse
 import requests
 
+proxies = {
+    'http': 'socks5h://127.0.0.1:444',
+    'https': 'socks5h://127.0.0.1:444',
+}
+
+
 proxy_router = APIRouter()
 
 @proxy_router.get("/proxy")
@@ -19,7 +25,7 @@ def proxy(url: str):
 
     try:
         # Send the request to the target server
-        response = requests.get(url, headers=headers, stream=True)
+        response = requests.get(url, headers=headers, stream=True, proxies=proxies)
 
         # Create a streaming response to forward the content
         return StreamingResponse(

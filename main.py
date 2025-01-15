@@ -42,7 +42,7 @@ if __name__ == "__main__":
         host="0.0.0.0",  # Membuka akses ke semua jaringan
         port=443,        # Port HTTPS
         ssl_certfile="./ongoing.ccgnimex.my.id/fullchain.pem",  # Lokasi sertifikat
-        ssl_keyfile="./etc/letsencrypt/live/ongoing.ccgnimex.my.id/privkey.pem",    # Lokasi kunci privat
+        ssl_keyfile="./ongoing.ccgnimex.my.id/privkey.pem",    # Lokasi kunci privat
         workers=4        # Jalankan beberapa worker
     )
 
