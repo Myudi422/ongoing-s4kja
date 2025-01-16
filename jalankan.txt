@@ -3,6 +3,10 @@ sudo uvicorn main:app --host 0.0.0.0 --port 443 --ssl-certfile ./ongoing.ccgnime
  #jalankan ssh proxychains
  autossh -M 0 -N -D 444 akuiiki@ncs.xensin.store
 
+ sshpass -p "passku" autossh -M 0 -N -D 444 akuiiki@ncs.xensin.store
+
+
+
 #edit proxychains shocks ke port 444
 sudo nano /etc/proxychains.conf
 
